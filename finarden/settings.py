@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 
 OWN_APPS  = [
     "users",
-    "expends"
+    "expends",
+    "tips"
 ]
 # Application definition
 

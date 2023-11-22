@@ -4,3 +4,5 @@ from django.db import models
 
 class Tip(models.Model):
     detail = models.TextField()
+    active = models.BooleanField(null=True)
+    created = models.DateTimeField(null=True,auto_now_add=True)

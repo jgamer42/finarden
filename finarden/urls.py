@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from users import views
 
 urlpatterns = [
     path('home', admin.site.urls,name='home'),
-    path('users',include('users.urls'))
+    path('users',include('users.urls')),
+    path('converter', views.converter, name='converter')
 ]

@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+<script src="https://cdn.tailwindcss.com"></script>
+{% block title %}
+    
+    {% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <img src="{% static 'users/img/logo_finarden_solo.png' %}" alt="Logo" class="image" style="max-height: 25px;">
+      <a href="{% url 'admin:index' %}">Finarden</a>
+    </img>
+  </h1>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

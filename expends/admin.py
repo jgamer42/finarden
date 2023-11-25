@@ -18,18 +18,15 @@ class BaseAdmin(admin.ModelAdmin):
 class IncomeAdmin(BaseAdmin):
     fields = ("date","source","detail","amount")
     list_display = ("date","amount","source")
-    list_editable = ("amount","source")
 
     
 class ExpendAdmin(BaseAdmin):
     fields = ("date","where","detail","amount")
     list_display = ("date","where","amount")
-    list_editable = ("where","amount")
     
 class BillAdmin(BaseAdmin):
     fields = ("detail","duration","cutoff","amount","active")
     list_display = ("cutoff","amount","detail")
-    list_editable = ("amount","detail")
 
     
 admin.site.register(models.Income,IncomeAdmin)

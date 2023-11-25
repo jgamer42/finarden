@@ -1,47 +1,98 @@
 {% extends "admin/base_site.html" %}
 {% load i18n static%}
+{% load static %}
 
-{% block coltype %}colMS{% endblock %}
 
-{% block content_title %}{% if title %}<h1>finarden</h1>{% endif %}{% endblock %}
+{% block content_title %}{% endblock %}
 
 
 {% block content %}
-<div id="content-main">
-    hola mundo soy una prueba {{ prueba }}
-
-    Porque por como quedo ahora ya puedo hacer esto XD y meter datos desde el back
-</div>
-{% endblock %}
-
-{% block sidebar %}
-<div id="content-related">
-    <div class="module" id="recent-actions-module">
-        <h2>{% translate 'Recent actions' %}</h2>
-        <h3>{% translate 'My actions' %}</h3>
-            {% load log %}
-            {% get_admin_log 10 as admin_log for_user user %}
-            {% if not admin_log %}
-            <p>{% translate 'None available' %}</p>
-            {% else %}
-            <ul class="actionlist">
-            {% for entry in admin_log %}
-            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
-                {% if entry.is_deletion or not entry.get_admin_url %}
-                    {{ entry.object_repr }}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div id="content-main" class="grid grid-cols-1">
+        <div class="grid grid-cols-2 my-5 gap-3">
+            <a type="button" class='items-center justify-center rounded-md p-2 bg-teal-600 hover:bg-teal-400 text-center' href="{% url  'converter' %}">
+                <span class="text-white hover:text-gray">Conversor de divisas</span>
+            </a>
+            <button type="button" class='items-center justify-center rounded-md p-2 text-white bg-blue-600 hover:bg-blue-400 hover:text-gray'>Cargar extracto</button>
+        </div>
+        <div class="border-solid border-2 border-slate-400 text-center mb-5 text-xl">
+            <h1 class="text-teal-500">Recomendacion del dia:</h1>
+            <p>
+                {{ tip_of_day }}
+            </p>
+        </div>
+        <div class="grid grid-cols-2 gap-5 mb-5 text-center">
+            <div class="border-solid border-2 rounded-lg p-5 border-teal-400">
+                <span class="text-lg text-teal-500">Proporcion gastos / facturas </span><br/>
+                {% if not dashboard_data.donut  %}
+                    <span >No hay datos para mostrar</span>
                 {% else %}
-                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                    <canvas id="donut-chart"></canvas>
+                    <script>
+                        const donut = document.getElementById("donut-chart")
+                        var donut_data = {{ dashboard_data.donut|safe }};
+                        new Chart(donut, {
+                            type: 'doughnut',
+                            data:donut_data
+                            }
+                        )
+                    </script>
                 {% endif %}
-                <br>
-                {% if entry.content_type %}
-                    <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
+            </div>
+            <div class="border-solid border-2 rounded-lg p-5 border-teal-400 ">
+                <span class="text-lg text-teal-500"> Ingresos vs egresos en el mes </span><br/>
+                {% if not dashboard_data.timeline  %}
+                    <span>No hay datos para mostrar</span>
                 {% else %}
-                    <span class="mini quiet">{% translate 'Unknown content' %}</span>
+                    <canvas id="timeline-chart" data={{ dashboard_data.timeline }}></canvas>
+                    <script>
+                        const timeline = document.getElementById("timeline-chart")
+                        var timeline_data = {{ dashboard_data.timeline|safe }};
+                        new Chart(timeline, {
+                            type: 'line',
+                            data:timeline_data
+                        })
+                    </script>
                 {% endif %}
-            </li>
-            {% endfor %}
-            </ul>
-            {% endif %}
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-5 text-center">
+            <div class="border-solid border-2 rounded-lg p-5 border-teal-400">
+                <span class="text-lg text-teal-500"> Distribucion de gastos en la semana </span><br/>
+                {% if not dashboard_data.scatter %}
+                    <span>No hay datos para mostrar</span>
+                {% else %}
+                    <canvas id="scatter-chart"  data={{ dashboard_data.scatter }}></canvas>
+                    <script>
+                        const scatter = document.getElementById("scatter-chart")
+                        var scatter_data = {{ dashboard_data.scatter|safe }};
+                        new Chart(scatter, {
+                            type: 'line',
+                            data:scatter_data
+                        })
+                    </script>
+                {% endif %}
+            </div>
+            <div class="border-solid border-2 rounded-lg p-5 border-teal-400">
+                <span class="text-lg text-teal-500"> Pagos de facturas por dias </span><br/>
+                {% if not dashboard_data.bar %}
+                    <span>No hay datos para mostrar</span>
+                {% else %}
+                    <canvas id="bar-chart" data={{ dashboard_data.bar }}></canvas> 
+                    <script> 
+                        const bar = document.getElementById("bar-chart")
+                        var bar_data = {{ dashboard_data.bar|safe }};
+                        new Chart(bar, {
+                            type: 'bar',
+                            data:bar_data
+                            }
+                        )
+                    </script> 
+                {% endif %}
+            </div>
+        </div>
     </div>
-</div>
+    
 {% endblock %}
+

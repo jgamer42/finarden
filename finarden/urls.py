@@ -17,9 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from users import views
+from django.views.generic import RedirectView
 
 urlpatterns = [
+    path("",RedirectView.as_view(url="/home",permanent=False)),
+    path("inicio",RedirectView.as_view(url="/home",permanent=False),name="inicio"),
     path('home', admin.site.urls,name='home'),
-    path('users',include('users.urls')),
+    path('usuarios',include('users.urls')),
     path('converter', views.converter, name='converter')
 ]

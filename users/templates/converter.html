@@ -11,11 +11,13 @@
 </head>
 <body style="overflow: hidden;">
 
-    <div id='jumbotron' class="jumbotron jumbotron-fluid" style="text-align: center; margin-top: -50px;">
-        <br><br><br>
-        <img src="{% static 'users/img/logo_finarden_solo.png' %}" alt="Logo" class="image" style="width: 100px; margin: auto;">
+    <div id='jumbotron' class="jumbotron jumbotron-fluid" style="text-align: center;">
+        <a href="{% url 'inicio' %}">
+            <img src="{% static 'users/img/logo_finarden_solo.png' %}" alt="Logo" class="image" >
+        </a>
         <h1 id="title" class="display-5">Finarden</h1>
         <h5>Conversor de divisas</h5>
+        <a href="{% url 'inicio' %}" >voler al Inicio</a>
     </div>
     <div class="container">
         <div class="page-header" id="banner">

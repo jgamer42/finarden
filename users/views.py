@@ -28,3 +28,6 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signUp.html', {'form': form})
+
+def converter(request):
+    return render(request, 'converter.html')

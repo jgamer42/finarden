@@ -110,6 +110,8 @@ class ModifyIndex:
     def target_index(self,request,*args,**kwargs):
         today = datetime.now()
         tip_of_day = Tip.objects.values("detail").order_by("created").filter(active=True).last()
+        if not tip_of_day:
+            tip_of_day={'detail':""}
         if request.user.is_superuser:
             incomes = Income.objects.filter(date__month=today.month)
             expends = Expend.objects.filter(date__month=today.month)

@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 # Create your models here.
 
 def min_max_values(value):
     if value < 1:
-        raise ValueError
+        raise ValidationError("El valor no puede ser negativo")
 def max_date_value(value):
     if value > 31:
-        raise ValueError
+        raise ValidationError("El valor no puede ser superior a 31")
 class Expend(models.Model):
     detail = models.TextField(verbose_name="detalle")
     amount = models.FloatField(verbose_name="valor",validators=[min_max_values])

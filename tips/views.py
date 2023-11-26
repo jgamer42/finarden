@@ -28,8 +28,8 @@ class ModifyIndex:
             5:"sabado",
             6:"domingo"
         }
-        raw_data = [{"x":days_maps[expend.date.weekday()],"y":expend.date.hour}for expend in expends]
-            
+        raw_data = sorted([expend for expend in expends],key=lambda x:x.date.weekday())
+        raw_data = [{"x":days_maps[expend.date.weekday()],"y":expend.date.hour}for expend in raw_data]          
         return {
                 "datasets": [{
                     "label": 'Gastos',

@@ -10,11 +10,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <div id="content-main" class="grid grid-cols-1">
-        <div class="grid grid-cols-2 my-5 gap-3">
-            <a type="button" class='items-center justify-center rounded-md p-2 bg-teal-600 hover:bg-teal-400 text-center' href="{% url  'converter' %}">
+        <div class="grid grid-cols-2 my-5 gap-3 text-center">
+            <a type="button" class='rounded-md p-2 bg-teal-600 hover:bg-teal-400 ' href="{% url  'converter' %}">
                 <span class="text-white hover:text-gray">Conversor de divisas</span>
             </a>
-            <button type="button" class='items-center justify-center rounded-md p-2 text-white bg-blue-600 hover:bg-blue-400 hover:text-gray'>Cargar extracto</button>
+            <form action="expends/importexpends" method="post" enctype="multipart/form-data" class="grid grid-rows-2 justify-items-center bg-teal-600 rounded-md p-5">{% csrf_token %}
+                <span>Subir Extracto</span>
+                <input type="file" class="block w-full text-sm
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-full file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-blue-400 file:text-white
+                    hover:file:bg-blue-500"
+                    name="bank_statement"/>
+                <input type="submit" value="subir"/>
         </div>
         <div class="border-solid border-2 border-slate-400 text-center mb-5 text-xl">
             <h1 class="text-teal-500">Recomendacion del dia:</h1>

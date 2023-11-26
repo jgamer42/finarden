@@ -24,5 +24,6 @@ urlpatterns = [
     path("inicio",RedirectView.as_view(url="/home",permanent=False),name="inicio"),
     path('home', admin.site.urls,name='home'),
     path('usuarios',include('users.urls')),
+    path('expends',include('expends.urls')),
     path('converter', views.converter, name='converter')
 ]
